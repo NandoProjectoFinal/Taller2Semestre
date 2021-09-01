@@ -69,7 +69,7 @@ public class Main {
 
     private static double[] arreglo() {
         Random rnum = new Random();
-        double arr[] = new double[69];
+        double arr[] = new double[70];
         for (int i =0; i<arr.length; i++){
             arr[i]= rnum.nextDouble()*9.9;
         }
@@ -82,6 +82,10 @@ public class Main {
             case "1":
                 ingresoDatos();
                 System.out.println("Datos Ingresados");
+                System.out.println("Lista de Sismos");
+                for (int i=0;i<ingresoDatos().length;i++){
+                    System.out.println("Sismo " + "["+(i+1) +"]" + ingresoDatos()[i]);
+                }
                 a = true;
                 break;
             case "2":
