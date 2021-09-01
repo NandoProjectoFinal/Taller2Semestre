@@ -8,49 +8,62 @@ public class Main {
 
     private static void iniciador() {
         String palabra;
+        int num;
         do {
             do {
                 menu();
                 palabra = pregunta();
-            }while (validacion(palabra)==false);
-            opciones(palabra);
-        }while(palabra=="4");
+            } while (opciones(palabra) == false);
+            num = Salir();
+        }while (num!=1);
     }
 
-    private static void opciones(String a) {            //i. Ingresar datos
-                                                       // ii. Mostrar sismo de mayor magnitud
-                                                        // iii. Contar sismos mayores o iguales a 5.0
-                                                       // iv. Enviar SMS por cada sismo mayor o igual a 7.0
-                                                        // v.  Salir (S/N)
-            if (a == "1"){
-                ingresoDatos();
+    private static int mostrarMayores(double[] doubles) {
+        int a=0;
+        for (int i =0; i<doubles.length; i++){
+            if (doubles[i]>=5){
+                a++;
             }
-            if (a == "2"){
-                mostrarMayor();
-            }
-            if (a == "3"){
-                mostrarMayores();
-            }
-            if (a == "4"){
-                Salir();
-            }
+        }
+        return a;
     }
 
-    private static void mostrarMayores() {
+    private static double mostrarMayor(double[] doubles) {
+        double a=0;
+        for (int i =0; i<doubles.length; i++){
+            if (doubles[i]>a){
+                a=doubles[i];
+            }
+        }
+        return a;
     }
 
-    private static void mostrarMayor() {
-
-    }
-
-    private static void Salir() {
-        System.out.println("Gracias por ocupar el programa");
+    private static int Salir() {
+        int a=3;
+        while (a==3){
+            System.out.println("Desea Salir?");
+            System.out.println("[1] Si");
+            System.out.println("[2] No");
+            switch (respuesta()){
+                case "1":
+                    a=1;
+                    System.out.println("Gracias por ocupar el programa");
+                    break;
+                case "2":
+                    a=2;
+                    System.out.println("Reiniciando");
+                    break;
+                default:
+                    System.out.println("Caracter no Valido");
+                    a=3;
+                    break;
+            }
+        }
+        return a;
     }
 
     private static double[] ingresoDatos() {
-        System.out.println("Ingresando Datos");
         double arr[] = arreglo();
-        System.out.println("Datos ingresados");
         return arr;
     }
 
@@ -63,20 +76,24 @@ public class Main {
         return arr;
     }
 
-    private static boolean validacion(String pregunta) {
-        boolean a;
+    private static boolean opciones(String pregunta) {
+        boolean a=false;
         switch (pregunta){
             case "1":
+                ingresoDatos();
+                System.out.println("Datos Ingresados");
                 a = true;
                 break;
             case "2":
+                System.out.println("El mayor sismo es de "+ mostrarMayor(ingresoDatos()));
                 a = true;
                 break;
             case "3":
+                System.out.println("La cantidad de sismos mayores a 5° son: " + mostrarMayores(ingresoDatos()));
                 a = true;
                 break;
             case "4":
-                a = true;
+                mensajes(ingresoDatos());
                 break;
             default:
                 System.out.println("Dato no valido");
@@ -84,6 +101,15 @@ public class Main {
                 break;
         }
         return a;
+    }
+
+    private static void mensajes(double[] doubles) {
+            int a=0;
+            for (int i =0; i<doubles.length; i++){
+                if (doubles[i]>6.9){
+                    System.out.println("ALERTA ALEJESE DE ZONA COSTERA");
+                }
+            }
     }
 
     private static String pregunta() {
@@ -97,11 +123,11 @@ public class Main {
     }
 
     public static void menu() {
-        System.out.println("                             Bienvenido a la carrera                           ");
-        System.out.println("[1] Comprar"); // Lista de productos a vender con sus valores
-        System.out.println("[2] Vender"); // opciones de ingreso de datos (nombre y valor de algun producto)
-        System.out.println("[3] Datos del negocio");// Ventas, inventario, y numero de ventas
-        System.out.println("[4] Salir");
+        System.out.println("                             Sismos                           ");
+        System.out.println("[1] Ingresar Datos");
+        System.out.println("[2] Ver el mayor Sismo");
+        System.out.println("[3] Conteo de Sismos mayores a 5°");
+        System.out.println("[4] Enviar SMS por Cada Sismo mayor de 7");
     }
 
 }
